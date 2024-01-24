@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>BMI Calculator</title>
+</head>
+
+<body>
+  <h1 id="welcome">Selamat Datang</h1>
+  <form id="bmi-form">
+    <label for="berat-badan">Berat Badan:</label>
+    <input type="number" id="berat-badan" placeholder="BB (kg)" min="0" max="200" required>
+    <label for="tinggi-badan">Tinggi Badan:</label>
+    <input type="number" id="tinggi-badan" placeholder="TB (cm)" min="0" max="300" required>
+    <button type="submit">Submit</button>
+  </form>
+  <div id="bmi-result"></div>
+  <script src="./script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
