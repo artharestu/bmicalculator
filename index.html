@@ -5,20 +5,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="icon" type="image/x-icon" href="./hacktiv8.jpeg">
   <title>BMI Calculator</title>
 </head>
 
-<body>
-  <h1 id="welcome">Selamat Datang</h1>
-  <button id="logout-btn">Logout</button>
-  <form id="bmi-form">
-    <label for="berat-badan">Berat Badan:</label>
-    <input type="number" id="berat-badan" placeholder="BB (kg)" min="0" max="200" required>
-    <label for="tinggi-badan">Tinggi Badan:</label>
-    <input type="number" id="tinggi-badan" placeholder="TB (cm)" min="0" max="300" required>
-    <button type="submit">Submit</button>
-  </form>
-  <div id="bmi-result"></div>
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg bg-primary shadow-lg fixed-top mb-5" style="opacity: 0.9;">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <a class="navbar-brand text-light" href="./index.html">BMI Calculator</a>
+      <div>
+        <span id="welcome" class="navbar-text text-light h6 mx-3"></span>
+        <button class="btn btn-outline-light btn-sm" id="logout-btn"><i class="bi bi-box-arrow-in-right"></i>
+          Logout</button>
+      </div>
+    </div>
+  </nav>
+  <div class="container d-flex justify-content-center align-items-center flex-column" style="margin-top: 100px;">
+    <form id="bmi-form"
+      class="form d-flex flex-column align-items-center justify-content-center gap-3 border rounded p-5 shadow w-50">
+      <div class="form-floating w-75">
+        <input type="number" class="form-control" id="berat-badan" placeholder="BB (kg)" min="0" max="200" required>
+        <label for="berat-badan" class="form-label">Weight (kg)</label>
+      </div>
+      <div class="form-floating w-75">
+        <input type="number" class="form-control" id="tinggi-badan" placeholder="TB (cm)" min="0" max="300" required>
+        <label for="tinggi-badan" class="form-label">Height (cm)</label>
+      </div>
+      <div class="w-75">
+        <button type="submit" class="btn btn-outline-primary w-100">
+          <i class="bi bi-calculator-fill"></i>
+          Calculate
+        </button>
+        <p id="notif" class="text-danger text-center fst-italic"></p>
+      </div>
+    </form>
+    <div id="bmi-result" class="w-50 mt-5">
+      <table class="table table-success table-striped" id="bmi-table">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Weight</th>
+            <th scope="col">Height</th>
+            <th scope="col">BMI</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bmi-table-body">
+        </tbody>
+      </table>
+      <div id="data-not-found" class="text-center w-100 shadow-lg border rounded p-5 bg-light">
+        <h6 class="text-primary">Data not found</h6>
+      </div>
+    </div>
+  </div>
   <script src="./script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
