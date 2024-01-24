@@ -5,3 +5,10 @@ loginForm.addEventListener('submit', (e) => {
   localStorage.setItem('username', username);
   window.location.href = 'index.html';
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  let username = localStorage.getItem('username');
+  if (username) {
+    window.location.href = 'index.html';
+  }
+})
