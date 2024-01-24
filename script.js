@@ -21,3 +21,9 @@ formBMI.addEventListener('submit', (e) => {
   let bmiResult = document.getElementById('bmi-result');
   bmiResult.innerHTML += `<p>Hasil BMI ${username}: ${bmi.toFixed(2)} tanggal ${new Date().toLocaleDateString()}</p>`
 })
+
+let logout = document.getElementById('logout-btn');
+logout.addEventListener('click', () => {
+  localStorage.removeItem('username');
+  window.location.href = 'login.html';
+})
