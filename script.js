@@ -13,21 +13,25 @@ formBMI.addEventListener('submit', (e) => {
 
   let weights = document.getElementById('berat-badan').value;
   let heights = document.getElementById('tinggi-badan').value;
-  let date = new Date().getTime();
   let bmi = (weights / (heights / 100 * heights / 100)).toFixed(2);
-  let tanggal = new Date(date)
-  let id = tanggal.getDate().toString() + tanggal.getMonth().toString() + tanggal.getFullYear().toString();
   let data = localStorage.getItem('data');
+
+  let inputDate = document.getElementById('date').value;
+  let date = new Date(inputDate).getTime();
+  let tanggal = new Date(date)
+  console.log(tanggal);
+  let id = tanggal.getDate().toString() + tanggal.getMonth().toString() + tanggal.getFullYear().toString();
+
 
   if (data !== null && findDataToday(id, JSON.parse(data))) {
     document.getElementById("notif").innerHTML =
-      "<small>Data BMI hari ini sudah ada! Anda hanya diperbolehkan menginputkan 1 kali per hari.</small>";
+      `<small>Data at ${tanggal.getDate()}/${tanggal.getMonth() + 1}/${tanggal.getFullYear()} already exist!</small>`;
   } else if (
     weights === "" || heights === "" ||
-    weights <= 30 || heights <= 100 ||
-    weights >= 200 || heights >= 250) {
+    weights <= 30 || heights <= 75 ||
+    weights >= 400 || heights >= 250) {
     document.getElementById("notif").innerHTML =
-      "<small>BB harus diisi diantara 30-200 kg dan TB harus diisi diantara 100-250 cm</small>";
+      "<small>BB 30-400 kg dan TB 75-250 cm</small>";
   } else {
     if (data === null) {
       localStorage.setItem('data', JSON.stringify([{
@@ -51,14 +55,17 @@ formBMI.addEventListener('submit', (e) => {
       localStorage.setItem('data', JSON.stringify(dataArr))
     }
     renderData();
+    document.getElementById("notif").innerHTML = "";
   }
   document.getElementById('berat-badan').value = "";
   document.getElementById('tinggi-badan').value = "";
+  document.getElementById('date').value = "";
 })
 
 let logout = document.getElementById('logout-btn');
 logout.addEventListener('click', () => {
   localStorage.removeItem('username');
+  localStorage.removeItem('data');
   window.location.href = 'login.html';
 })
 
@@ -66,7 +73,7 @@ function renderData() {
   let data = localStorage.getItem('data');
   let dataNotFound = document.getElementById('data-not-found');
   let bmiTable = document.getElementById('bmi-table');
-  if (data === null) {
+  if (data === null || JSON.parse(data).length === 0) {
     dataNotFound.classList.remove('d-none');
     bmiTable.classList.add('d-none');
   } else {
@@ -86,7 +93,9 @@ function renderData() {
           <td>${dataArr[i].status}</td>
           <td>
             <button class="btn btn-outline-info btn-sm"><i class="bi bi-repeat"></i></button>
-            <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>            
+            <button class="btn btn-outline-danger btn-sm" onclick="deleteData('${dataArr[i].id}')">
+              <i class="bi bi-trash"></i>
+            </button>            
           </td>
         </tr>
       `;
@@ -94,7 +103,18 @@ function renderData() {
     }
   }
 }
-
+function deleteData(id) {
+  let data = localStorage.getItem('data');
+  let dataArr = JSON.parse(data);
+  let result = [];
+  for (let i = 0; i < dataArr.length; i++) {
+    if (dataArr[i].id !== id) {
+      result.push(dataArr[i]);
+    }
+  }
+  localStorage.setItem('data', JSON.stringify(result));
+  renderData();
+}
 function findDataToday(id, data) {
   let status = false;
   for (let i = 0; i < data.length; i++) {
@@ -104,4 +124,20 @@ function findDataToday(id, data) {
     }
   }
   return status;
+}
+
+function sortByDate() {
+  let data = localStorage.getItem('data');
+  let dataArr = JSON.parse(data);
+  for (let i = 0; i < dataArr.length; i++) {
+    for (let j = i + 1; j < dataArr.length; j++) {
+      if (dataArr[i].date > dataArr[j].date) {
+        let temp = dataArr[i];
+        dataArr[i] = dataArr[j];
+        dataArr[j] = temp;
+      }
+    }
+  }
+  localStorage.setItem('data', JSON.stringify(dataArr));
+  renderData();
 }

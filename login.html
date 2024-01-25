@@ -9,14 +9,15 @@
   <title>Login - BMI Calculator</title>
 </head>
 
-<body>
+<body class="bg-primary">
   <div class="container bg-light d-flex justify-content-center align-items-center my-4 rounded shadow-lg"
     style="height: 90vh;">
-    <div class="card w-50 mx-auto p-5">
+    <div class="card bg-light w-50 mx-auto p-5 shadow-lg rounded">
       <h4 class="text-center">Welcome to BMI Calculator</h4>
       <form id="login-form" class="form d-flex flex-column align-items-center justify-content-center gap-3">
-        <input type="text" placeholder="Enter your username" id="username" class="form-control w-75" required>
-        <button type="submit" class="btn btn-primary w-75">Submit</button>
+        <input type="text" placeholder="Enter your username" id="username" class="form-control w-75" minlength="3"
+          maxlength="15" required>
+        <button type="submit" class="btn btn-outline-primary w-75">Submit</button>
       </form>
     </div>
   </div>
