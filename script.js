@@ -15,11 +15,15 @@ formBMI.addEventListener('submit', (e) => {
   let heights = document.getElementById('tinggi-badan').value;
   let bmi = calcBMI(weights, heights);
   let data = localStorage.getItem('data');
+  let status = statusBMI();
 
   let inputDate = document.getElementById('date').value;
   let date = new Date(inputDate).getTime();
   let tanggal = new Date(date)
   let id = tanggal.getDate().toString() + tanggal.getMonth().toString() + tanggal.getFullYear().toString();
+
+
+
 
 
   if (data !== null && findDataToday(id, JSON.parse(data))) {
@@ -39,7 +43,7 @@ formBMI.addEventListener('submit', (e) => {
         weights,
         heights,
         bmi,
-        status: 'Obese'
+        status: ""
       }]))
     } else {
       let dataArr = JSON.parse(data);
@@ -49,7 +53,7 @@ formBMI.addEventListener('submit', (e) => {
         weights,
         heights,
         bmi,
-        status: 'Obese'
+        status: status
       })
       localStorage.setItem('data', JSON.stringify(dataArr))
     }
@@ -101,6 +105,13 @@ saveUpdate.addEventListener("click", () => {
       arrData[i].weights = berat;
       arrData[i].heights = tinggi;
       arrData[i].bmi = calcBMI(berat, tinggi);
+      if (arrData[i].bmi >= 25.1) {
+        arrData[i].status = "Obese"
+      } else if (arrData[i].bmi >= 18.5 && arrData[i].bmi <= 25) {
+        arrData[i].status = "Normal"
+      } else {
+        arrData[i].status = "Underweight"
+      }
 
       localStorage.setItem("data", JSON.stringify(arrData));
       renderData();
@@ -183,4 +194,18 @@ function sortByDate() {
   }
   localStorage.setItem('data', JSON.stringify(dataArr));
   renderData();
+}
+
+function statusBMI() {
+  let weights = document.getElementById('berat-badan').value;
+  let heights = document.getElementById('tinggi-badan').value;
+  let bmi = calcBMI(weights, heights);
+
+  if (bmi >= 25.1) {
+    return "Obese"
+  } else if (bmi >= 18.5 && bmi <= 25) {
+    return "Normal"
+  } else {
+    return "Underweight"
+  }
 }
