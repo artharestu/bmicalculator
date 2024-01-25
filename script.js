@@ -13,13 +13,12 @@ formBMI.addEventListener('submit', (e) => {
 
   let weights = document.getElementById('berat-badan').value;
   let heights = document.getElementById('tinggi-badan').value;
-  let bmi = (weights / (heights / 100 * heights / 100)).toFixed(2);
+  let bmi = calcBMI(weights, heights);
   let data = localStorage.getItem('data');
 
   let inputDate = document.getElementById('date').value;
   let date = new Date(inputDate).getTime();
   let tanggal = new Date(date)
-  console.log(tanggal);
   let id = tanggal.getDate().toString() + tanggal.getMonth().toString() + tanggal.getFullYear().toString();
 
 
@@ -69,6 +68,47 @@ logout.addEventListener('click', () => {
   window.location.href = 'login.html';
 })
 
+function updateModal(id) {
+  let data = localStorage.getItem("data");
+  let arrData = JSON.parse(data);
+
+  for (let i = 0; i < arrData.length; i++) {
+    if (arrData[i].id === id) {
+      document.getElementById(`berat`).value = arrData[i].weights;
+      document.getElementById(`tinggi`).value = arrData[i].heights;
+      let tanggal = new Date(arrData[i].date);
+      document.getElementById('update-tanggal').innerText =
+        `Update data at ${tanggal.getDate()}/${tanggal.getMonth() + 1}/${tanggal.getFullYear()}`;
+
+      document.getElementById("update-id").innerText = id;
+      break;
+    }
+  }
+}
+function calcBMI(weight, height) {
+  return (weight / (height / 100 * height / 100)).toFixed(2);
+}
+let saveUpdate = document.getElementById("save-update");
+saveUpdate.addEventListener("click", () => {
+  console.log("Masuk");
+  let berat = document.getElementById("berat").value;
+  let tinggi = document.getElementById("tinggi").value;
+  let id = document.getElementById("update-id").innerText;
+  let data = localStorage.getItem("data");
+  let arrData = JSON.parse(data);
+  for (let i = 0; i < arrData.length; i++) {
+    if (arrData[i].id === id) {
+      arrData[i].weights = berat;
+      arrData[i].heights = tinggi;
+      arrData[i].bmi = calcBMI(berat, tinggi);
+
+      localStorage.setItem("data", JSON.stringify(arrData));
+      renderData();
+      break;
+    }
+  }
+})
+
 function renderData() {
   let data = localStorage.getItem('data');
   let dataNotFound = document.getElementById('data-not-found');
@@ -91,8 +131,11 @@ function renderData() {
           <td>${dataArr[i].heights} cm</td>
           <td>${dataArr[i].bmi}</td>
           <td>${dataArr[i].status}</td>
-          <td>
-            <button class="btn btn-outline-info btn-sm"><i class="bi bi-repeat"></i></button>
+          <td>            
+            <button class="btn btn-outline-info btn-sm" onclick="updateModal('${dataArr[i].id}')" 
+            data-bs-toggle="modal" data-bs-target="#bmiModal">
+              <i class="bi bi-pencil-square"></i>
+            </button>
             <button class="btn btn-outline-danger btn-sm" onclick="deleteData('${dataArr[i].id}')">
               <i class="bi bi-trash"></i>
             </button>            
