@@ -11,6 +11,8 @@
 </head>
 
 <body class="bg-light">
+
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg bg-primary shadow-lg fixed-top mb-5" style="opacity: 0.9;">
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <a class="navbar-brand text-light" href="./index.html">BMI Calculator</a>
@@ -22,6 +24,8 @@
     </div>
   </nav>
   <div class="container d-flex justify-content-center align-items-center flex-column" style="margin-top: 100px;">
+
+    <!-- Form Input -->
     <form id="bmi-form"
       class="d-flex flex-column align-items-center justify-content-center gap-3 border rounded p-5 shadow w-50"
       style="height: 400px;">
@@ -45,6 +49,8 @@
         <p id="notif" class="text-danger text-center fst-italic"><small>Please input your weight and height</small></p>
       </div>
     </form>
+
+    <!-- Menampilkan data BMI -->
     <div id="bmi-result" class="w-50 my-5">
       <table class="table table-success table-striped" id="bmi-table">
         <thead>
@@ -66,7 +72,8 @@
     </div>
   </div>
 
-  <!-- Update Modal -->
+
+  <!-- Pop Up untuk update data -->
   <div class="modal fade" id="bmiModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -103,7 +110,8 @@
     </div>
   </div>
 
-  <!-- Delete Modal -->
+
+  <!-- Pop up untuk delete data -->
   <div class="modal fade" id="notif-delete" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog bg-light">
       <div class="modal-content">
@@ -124,6 +132,7 @@
     </div>
   </div>
 
+  <!-- Notifikasi ketika data berhasil ditambahkan -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="toast-add-data" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header bg-primary">
