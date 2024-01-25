@@ -1,4 +1,11 @@
+/* Mengambil data username dari localStorage */
 let username = localStorage.getItem('username');
+
+/* 
+Ketika halaman dibuka pertama kali, dicek dulu apakah ada username atau tidak.
+Jika tidak diarahkan ke halaman login.
+Jika sudah ada username, tampilkan ke halaman index.
+*/
 document.addEventListener('DOMContentLoaded', () => {
   if (!username) {
     window.location.href = 'login.html';
@@ -7,6 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderData();
 })
 
+/*
+Fungsi Create. Mengambil data dari form input dan menyimpannya ke localStorage.
+Setelah berhasil maka tampilkan data menggunakan fungsi renderData()
+Tampilkan notifikasi data berhasil ditambahkan.
+*/
 let formBMI = document.getElementById('bmi-form');
 formBMI.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -21,10 +33,6 @@ formBMI.addEventListener('submit', (e) => {
   let date = new Date(inputDate).getTime();
   let tanggal = new Date(date)
   let id = tanggal.getDate().toString() + tanggal.getMonth().toString() + tanggal.getFullYear().toString();
-
-
-
-
 
   if (data !== null && findDataToday(id, JSON.parse(data))) {
     document.getElementById("notif").innerHTML =
@@ -69,6 +77,10 @@ formBMI.addEventListener('submit', (e) => {
   toastBootstrap.show()
 })
 
+/*
+Fungsi logout dan reset data
+Menghapus data username dan semua data BMI dari localStorage
+*/
 let logout = document.getElementById('logout-btn');
 logout.addEventListener('click', () => {
   localStorage.removeItem('username');
@@ -76,6 +88,10 @@ logout.addEventListener('click', () => {
   window.location.href = 'login.html';
 })
 
+/*
+Fungsi untuk menampilkan data yang akan diupdate.
+Input id data yang ingin diupdate
+*/
 function updateModal(id) {
   let data = localStorage.getItem("data");
   let arrData = JSON.parse(data);
@@ -93,9 +109,17 @@ function updateModal(id) {
     }
   }
 }
+
+/*
+Fungsi untuk menghitung BMI
+*/
 function calcBMI(weight, height) {
   return (weight / (height / 100 * height / 100)).toFixed(2);
 }
+
+/*
+Fungsi untuk menyimpan data yang sudah diupdate.
+*/
 let saveUpdate = document.getElementById("save-update");
 saveUpdate.addEventListener("click", () => {
   let berat = document.getElementById("berat").value;
@@ -123,6 +147,9 @@ saveUpdate.addEventListener("click", () => {
   }
 })
 
+/*
+Fungsi untuk menampilkan data yang ada di localStorage
+ */
 function renderData() {
   let data = localStorage.getItem('data');
   let dataNotFound = document.getElementById('data-not-found');
@@ -160,9 +187,17 @@ function renderData() {
     }
   }
 }
+
+/*
+Fungsi untuk menyimpan id data yang ingin di hapus dalam pop up
+*/
 function popUpDelete(id) {
   document.getElementById("delete-id").innerHTML = id;
 }
+
+/*
+Fungsi untuk menghapus data.
+ */
 function deleteData() {
   let id = document.getElementById("delete-id").innerHTML;
   let data = localStorage.getItem('data');
@@ -176,6 +211,11 @@ function deleteData() {
   localStorage.setItem('data', JSON.stringify(result));
   renderData();
 }
+
+/*
+Fungsi untuk mencegah data duplikat berdasarkan tanggal.
+Jika tanggal sama, berarti data sudah ada.
+*/
 function findDataToday(id, data) {
   let status = false;
   for (let i = 0; i < data.length; i++) {
@@ -187,6 +227,9 @@ function findDataToday(id, data) {
   return status;
 }
 
+/*
+Fungsi untuk mengurutkan data berdasarkan tanggal
+*/
 function sortByDate() {
   let data = localStorage.getItem('data');
   let dataArr = JSON.parse(data);
@@ -203,6 +246,9 @@ function sortByDate() {
   renderData();
 }
 
+/*
+Fungsi untuk mencari status BMI.
+*/
 function statusBMI() {
   let weights = document.getElementById('berat-badan').value;
   let heights = document.getElementById('tinggi-badan').value;
