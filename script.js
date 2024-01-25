@@ -59,6 +59,10 @@ formBMI.addEventListener('submit', (e) => {
   document.getElementById('berat-badan').value = "";
   document.getElementById('tinggi-badan').value = "";
   document.getElementById('date').value = "";
+
+  const toastLiveExample = document.getElementById('toast-add-data')
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastBootstrap.show()
 })
 
 let logout = document.getElementById('logout-btn');
@@ -90,7 +94,6 @@ function calcBMI(weight, height) {
 }
 let saveUpdate = document.getElementById("save-update");
 saveUpdate.addEventListener("click", () => {
-  console.log("Masuk");
   let berat = document.getElementById("berat").value;
   let tinggi = document.getElementById("tinggi").value;
   let id = document.getElementById("update-id").innerText;
@@ -136,17 +139,21 @@ function renderData() {
             data-bs-toggle="modal" data-bs-target="#bmiModal">
               <i class="bi bi-pencil-square"></i>
             </button>
-            <button class="btn btn-outline-danger btn-sm" onclick="deleteData('${dataArr[i].id}')">
+            <button class="btn btn-outline-danger btn-sm" onclick="popUpDelete('${dataArr[i].id}')"
+            data-bs-toggle="modal" data-bs-target="#notif-delete">
               <i class="bi bi-trash"></i>
-            </button>            
+            </button>
           </td>
         </tr>
       `;
-
     }
   }
 }
-function deleteData(id) {
+function popUpDelete(id) {
+  document.getElementById("delete-id").innerHTML = id;
+}
+function deleteData() {
+  let id = document.getElementById("delete-id").innerHTML;
   let data = localStorage.getItem('data');
   let dataArr = JSON.parse(data);
   let result = [];
