@@ -43,7 +43,7 @@ formBMI.addEventListener('submit', (e) => {
         weights,
         heights,
         bmi,
-        status: ""
+        status: status
       }]))
     } else {
       let dataArr = JSON.parse(data);
