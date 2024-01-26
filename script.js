@@ -72,6 +72,7 @@ formBMI.addEventListener('submit', (e) => {
   document.getElementById('tinggi-badan').value = "";
   document.getElementById('date').value = "";
 
+  imageStatus()
   const toastLiveExample = document.getElementById('toast-add-data')
   const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
   toastBootstrap.show()
@@ -210,6 +211,7 @@ function deleteData() {
   }
   localStorage.setItem('data', JSON.stringify(result));
   renderData();
+  hideStatus();
 }
 
 /*
@@ -255,10 +257,39 @@ function statusBMI() {
   let bmi = calcBMI(weights, heights);
 
   if (bmi >= 25.1) {
-    return "Obese"
+    return "Obesitas"
   } else if (bmi >= 18.5 && bmi <= 25) {
     return "Normal"
   } else {
-    return "Underweight"
+    return "Kurus"
+  }
+}
+
+function imageStatus() {
+  let data = localStorage.getItem("data");
+  let arrData = JSON.parse(data);
+  let divHide = document.getElementById('hide');
+
+  for (let i = 0; i < arrData.length; i++) {
+    if (arrData[i].status === "Obesitas") {
+      document.getElementById("text-bmi-status").innerText = `BMI kamu: ${arrData[i].bmi}, kamu termasuk kedalam kategori ${arrData[i].status} `
+      document.getElementById('image-status').src = "https://img.freepik.com/free-vector/obesity-problem-overweight-man-medical-consultation-diagnostics-negative-impact-obesity-humans-health-internal-organs-vector-isolated-concept-metaphor-illustration_335657-1305.jpg?w=826&t=st=1706225852~exp=1706226452~hmac=bdf09a4b2196102cfc59915a92370eb483a6ba911ee04b28aa2c9405e20fddcd"
+    } else if (arrData[i].status === "Normal") {
+      document.getElementById("text-bmi-status").innerText = `BMI kamu: ${arrData[i].bmi}, kamu termasuk kedalam kategori ${arrData[i].status} `
+      document.getElementById('image-status').src = "https://img.freepik.com/free-vector/people-eating-healthy-exercising-regularly_53876-59882.jpg?w=996&t=st=1706225910~exp=1706226510~hmac=1c18de1c2c7d9efade68e991256804c147a1478db1d166b502ac4b341c54ef20"
+    } else {
+      document.getElementById("text-bmi-status").innerText = `BMI kamu: ${arrData[i].bmi}, kamu termasuk kedalam kategori ${arrData[i].status} `
+      document.getElementById('image-status').src = "https://img.freepik.com/free-vector/cartoon-avocado-flat-composition-with-front-view-electronic-kitchen-scales-surrounded-by-characters-vegetables-vector-illustration_1284-81296.jpg?w=1380&t=st=1706225933~exp=1706226533~hmac=7059c2f134f374be18649b0d04a60dfe880ab35bcc1f1b96053850a35b9a7620"
+    }
+  }
+  if (divHide.style.display === "none") {
+    divHide.style.display = "block";
+  }
+
+}
+function hideStatus() {
+  let divHide = document.getElementById('hide');
+  if (divHide.style.display === "block") {
+    divHide.style.display = "none";
   }
 }
