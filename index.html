@@ -40,6 +40,14 @@
       width: 150px;
       height: fit-content;
       text-align: end;
+      float: left;
+      margin-right: 10px;
+    }
+
+    .flex-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
@@ -86,10 +94,12 @@
     </form>
 
     <!-- status hide and pop -->
-    <div id="hide" class="w-50 my-4 shadow-lg border rounded" style="display: none; height: 150px;">
-      <img src="https://img.freepik.com/free-vector/people-eating-healthy-exercising-regularly_53876-59882.jpg"
-        id="image-status" class="rounded">
-      <span id="text-bmi-status"></span>
+    <div id="hide" class="w-50 my-4 shadow-lg border rounded " style="display: none; height: 150px;">
+      <div class="flex-text">
+        <img src="https://img.freepik.com/free-vector/people-eating-healthy-exercising-regularly_53876-59882.jpg"
+          id="image-status" class="rounded">
+        <span id="text-bmi-status"></span>
+      </div>
     </div>
 
     <!-- Menampilkan data BMI -->
